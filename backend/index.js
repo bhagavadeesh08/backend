@@ -9,8 +9,28 @@ const task1Routes = require('./routes/task1');
 const Task1 = require('./schema/task1'); 
 const env = require('dotenv');
 env.config(); 
-
-app.use(cors());
+const corsOption = {
+    origin: function(origin, callback) {
+        const allowedOrigins = [
+            'https://backend-six-pink-68.vercel.app'
+        ];
+        
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    preflightContinue: false,
+    optionsSuccessStatus: 204
+};
+app.use(cors(corsOption));
 app.use(bodyParser.json());
 app.use(express.json());
 
@@ -33,25 +53,3 @@ mongoose.connect(process.env.MANGO_URI)
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
-
-const corsOption = {
-    origin: function(origin, callback) {
-        const allowedOrigins = [
-            'https://backend-len.vercel.app'
-        ];
-        
-        // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin) return callback(null, true);
-        
-        if (allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    preflightContinue: false,
-    optionsSuccessStatus: 204
-};

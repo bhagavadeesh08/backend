@@ -11,7 +11,7 @@ const Home = () => {
         e.preventDefault();
         const user = { name, email, department, year };
         try {
-            const response = await axios.post('http://localhost:5000/user/register', user);
+            const response = await axios.post('https://backend-six-pink-68.vercel.app/user/register', user);
             console.log(response);
             window.alert('User registered successfully');   
             setName('');
