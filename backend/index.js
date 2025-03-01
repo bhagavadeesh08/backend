@@ -12,7 +12,8 @@ env.config();
 const corsOption = {
     origin: function(origin, callback) {
         const allowedOrigins = [
-            'https://backend-six-pink-68.vercel.app'
+            'https://backend-six-pink-68.vercel.app',
+            'https://fronten-mu.vercel.app/'
         ];
         
         // Allow requests with no origin (like mobile apps or curl requests)
